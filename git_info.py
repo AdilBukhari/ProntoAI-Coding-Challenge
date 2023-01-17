@@ -1,5 +1,8 @@
 from pygit2 import Repository, Object
 import time
+import sys
+
+repo_name = sys.argv[1]
 
 repo = Repository('.')
 active_branch = repo.head.shorthand
