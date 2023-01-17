@@ -1,13 +1,24 @@
 from pygit2 import Repository, Object
+import time
 
 repo = Repository('.')
 active_branch = repo.head.shorthand
-print(active_branch)
+print('active branch: ' + active_branch)
 
 changes = repo.diff()
 changed = True if changes.stats.files_changed > 0 else False
-print(changed)
-print('________')
+print('local changes: ' + str(changed))
 
 commit = repo.revparse_single('HEAD')
-print(commit.commit_time)
+time_diff = (time.time() - commit.commit_time) / 604800
+if time_diff <= 1.0:
+    print('recent commit: True')
+else:
+    print('recent commit: False')
+
+
+author = str(commit.author).split()[0]
+if author == 'Rufus':
+    print('blame Rufus: True')
+else:
+    print('blame Rufus: False')
